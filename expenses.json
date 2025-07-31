@@ -1,0 +1,32 @@
+[
+    {
+        "date": "16-07-2025",
+        "category": "Groceries",
+        "amount": 204.0
+    },
+    {
+        "date": "16-07-2025",
+        "category": "Exercise",
+        "amount": 84.0
+    },
+    {
+        "date": "16-07-2025",
+        "category": "Clothes",
+        "amount": 1000.0
+    },
+    {
+        "date": "16-07-2025",
+        "category": "Entertainment",
+        "amount": 600.0
+    },
+    {
+        "date": "16-07-2025",
+        "category": "Dentist",
+        "amount": 1500.0
+    },
+    {
+        "date": "16-07-2025",
+        "category": "Fruits",
+        "amount": 405.0
+    }
+]

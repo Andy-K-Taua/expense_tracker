@@ -1,0 +1,11 @@
+expense-tracker
+├── __pycache__
+│   ├── data_manager.cpython-39.pyc
+│   └── expense.cpython-39.pyc
+├── data_manager.py
+├── expense.py
+├── expense_tracker.py
+├── expenses.json
+└── project_structure.txt
+
+1 directory, 7 files
