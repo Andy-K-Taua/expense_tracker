@@ -23,3 +23,8 @@ def add_expense(category: str, amount: float):
     import datetime
     db.add_expense(Expense(datetime.date.today(), category, amount))
     return {"status": "success"}
+
+@app.post("/delete/{index}")
+def delete_expense(index: int):
+    db.delete_expense(index)
+    return {"status": "deleted"}

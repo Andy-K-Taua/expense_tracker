@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Expense Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 flex justify-center py-10">
     <div class="w-[500px] bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Expense Tracker</h1>
             <span id="total" class="text-xl font-bold text-emerald-600">Total: $0.00</span>
@@ -13,28 +16,57 @@
 
         <div class="space-y-3 mb-8">
             <input id="cat" placeholder="Category" class="w-full p-3 bg-gray-50 border rounded-lg">
-            <input id="amt" type="number" placeholder="Amount" class="w-full p-3 bg-gray-50 border rounded-lg">
-            <button onclick="addExpense()" class="w-full bg-blue-500 text-white p-3 rounded-lg font-bold">Add Expense</button>
+            <input id="amt" type="number" step="0.01" placeholder="Amount"
+                class="w-full p-3 bg-gray-50 border rounded-lg">
+            <button onclick="addExpense()"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-lg font-bold">Add Expense</button>
         </div>
 
         <h2 class="text-lg font-bold text-gray-800 mb-3">History</h2>
         <div id="history" class="space-y-2">
             {% for exp in expenses %}
-            <div class="flex justify-between p-3 bg-gray-50 border rounded-lg">
+            <div class="flex justify-between items-center p-3 bg-gray-50 border rounded-lg">
                 <span class="font-bold text-gray-700">{{ exp.category }}</span>
-                <span class="text-emerald-600 font-bold">${{ "%.2f"|format(exp.amount) }}</span>
+                <div class="flex items-center gap-4">
+                    <span class="amount-val text-emerald-600 font-bold">${{ "%.2f"|format(exp.amount) }}</span>
+                    <button onclick="deleteExpense({{ loop.index0 }})"
+                        class="text-red-500 hover:text-red-700 font-bold text-sm">Delete</button>
+                </div>
             </div>
             {% endfor %}
+            {% if not expenses %}
+            <p class="text-gray-500 text-center py-4">No expenses yet.</p>
+            {% endif %}
         </div>
     </div>
 
     <script>
+        // Calculate Total on page load
+        function calculateTotal() {
+            let total = 0;
+            document.querySelectorAll('.amount-val').forEach(el => {
+                total += parseFloat(el.innerText.replace('$', ''));
+            });
+            document.getElementById('total').innerText = `Total: $${total.toFixed(2)}`;
+        }
+        calculateTotal();
+
+        // Add Expense API call
         async function addExpense() {
             const cat = document.getElementById('cat').value;
             const amt = document.getElementById('amt').value;
-            await fetch(`/add?category=${cat}&amount=${amt}`, {method: 'POST'});
+            if (!cat || !amt) return alert("Please enter both category and amount.");
+
+            await fetch(`/add?category=${encodeURIComponent(cat)}&amount=${amt}`, { method: 'POST' });
+            location.reload();
+        }
+
+        // Delete Expense API call
+        async function deleteExpense(index) {
+            await fetch(`/delete/${index}`, { method: 'POST' });
             location.reload();
         }
     </script>
 </body>
+
 </html>
