@@ -51,3 +51,6 @@ To verify your connection independently of the main app, you can run:
 ```bash
 python test_connection.py
 ```
+
+## Live Demo
+[View Project Here](https://expense-tracker-xfgq.onrender.com)
