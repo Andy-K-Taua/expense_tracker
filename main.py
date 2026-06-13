@@ -1,29 +1,20 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-from manager_factory import get_data_manager as get_manager
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from manager_factory import get_data_manager
 
 app = FastAPI()
-db = get_manager()
-
-# Pydantic model for receiving data from web requests
-class ExpenseSchema(BaseModel):
-    category: str
-    amount: float
+db = get_data_manager()
+templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
-def read_root():
-    return {"message": "Expense Tracker API is running"}
+def home(request: Request):
+    # Pass the list of expenses directly to the HTML template
+    return templates.TemplateResponse("index.html", {"request": request, "expenses": db.expenses})
 
-@app.get("/expenses")
-def get_expenses():
-    # Return your data as a list of dictionaries
-    return [e.__dict__ for e in db.expenses]
-
-@app.post("/expenses")
-def add_expense(expense: ExpenseSchema):
+@app.post("/add")
+def add_expense(category: str, amount: float):
     from expense import Expense
     import datetime
-    
-    new_expense = Expense(datetime.date.today(), expense.category, expense.amount)
-    db.add_expense(new_expense)
-    return {"status": "success", "data": new_expense.__dict__}
+    db.add_expense(Expense(datetime.date.today(), category, amount))
+    return {"status": "success"}
