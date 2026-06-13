@@ -23,13 +23,9 @@ git clone <your-repository-url>
 cd <project-folder>
 
 ```
-
-
 2. **Install dependencies:** 
 ```bash
 pip install pymongo python-dotenv certifi
-```
-
 ```
 
 3. **Configure Environment Variables:** Create a `.env` file in the project root with your configuration.
