@@ -52,6 +52,5 @@ The system uses `manager_factory.py` to determine which database handler to init
 To verify your connection independently of the main app, you can run:
 
 ```bash
-
-
+python test_connection.py
 ```
