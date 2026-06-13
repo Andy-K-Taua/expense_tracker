@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from manager_factory import get_manager # Ensure this works with your env vars
+from manager_factory import get_data_manager as get_manager
 
 app = FastAPI()
 db = get_manager()
