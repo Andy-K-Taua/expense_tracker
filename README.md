@@ -25,7 +25,8 @@ cd <project-folder>
 ```
 
 
-2. **Install dependencies:** ```bash
+2. **Install dependencies:** 
+```bash
 pip install pymongo python-dotenv certifi
 ```
 
