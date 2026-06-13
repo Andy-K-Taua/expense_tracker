@@ -9,8 +9,13 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/")
 def home(request: Request):
-    # Pass the list of expenses directly to the HTML template
-    return templates.TemplateResponse("index.html", {"request": request, "expenses": db.expenses})
+    # Pass 'request' as an argument, then the template name, 
+    # then the context dictionary
+    return templates.TemplateResponse(
+        request=request, 
+        name="index.html", 
+        context={"expenses": db.expenses}
+    )
 
 @app.post("/add")
 def add_expense(category: str, amount: float):
